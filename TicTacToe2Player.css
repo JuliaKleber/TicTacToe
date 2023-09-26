@@ -1,0 +1,101 @@
+body {
+  font-family: arial;
+  font-size: 20px;
+  background-color: white;
+  margin: 0px;
+}
+
+header {
+  background-image: linear-gradient(to right, #b5d5d8, #fcb1f2, #ffff00);
+  padding: 8px;
+  text-align: center;
+  font-size: 35px;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.margin {
+  margin: 15px;
+}
+
+#boardContainer {
+  text-align: center;
+  padding-top: 30px;
+  height: 470px;
+  width: 510px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+input {
+  border: 0px;
+  border-radius: 30px;
+  background-color: mediumorchid;
+  color: white;
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+input:hover {
+  background-color: rgb(148, 40, 175);
+}
+
+canvas {
+  width: 140px;
+  height: 140px;
+  padding: 1px 4px;
+}
+
+#outputStart {
+  width: 500px;
+  padding: 10px 5px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+#outputEnd {
+  width: 500px;
+  padding: 20px 5px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+footer {
+  background-image: linear-gradient(to right, #b5d5d8, #fcb1f2, #ffff00);
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  padding: 5px;
+  font-size: 15px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 1100px) {
+  main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  }
+}
