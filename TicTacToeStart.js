@@ -1,6 +1,6 @@
 "use strict";
 
-function setNumberPlayers() {
+const setNumberPlayers = () => {
   // Fragt, ob eine oder zwei Personen spielen wollen.
   const meldungStart = document.getElementById("meldungStart");
   const meldungNumberPlayers = document.createElement("p");
@@ -10,22 +10,22 @@ function setNumberPlayers() {
     "<br>Ein-Spieler- oder Zwei-Spieler-Spiel?<br><br>";
   const buttonOnePlayer = createButton("buttonOnePlayer", "ein Spieler");
   meldungNumberPlayers.appendChild(buttonOnePlayer);
-  buttonOnePlayer.addEventListener("click", function (event) {
+  buttonOnePlayer.addEventListener("click", (event) => {
     window.location.href = "TicTacToe1Player.html";
   });
   const buttonTwoPlayers = createButton("buttonTwoPlayers", "zwei Spieler");
   meldungNumberPlayers.appendChild(buttonTwoPlayers);
-  buttonTwoPlayers.addEventListener("click", function (event) {
+  buttonTwoPlayers.addEventListener("click", (event) => {
     window.location.href = "TicTacToe2Player.html";
   });
-}
+};
 
-function createButton(buttonName, value) {
+const createButton = (buttonName, value) => {
   const button = document.createElement("input");
   button.id = buttonName;
   button.type = "button";
   button.value = value;
   return button;
-}
+};
 
 setNumberPlayers();

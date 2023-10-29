@@ -15,7 +15,7 @@ class Board {
   }
 }
 
-function initializeGame() {
+const initializeGame = () => {
   // Bereitet das Spiel vor.
 
   // Initialisiert das Objekt board um die
@@ -29,9 +29,9 @@ function initializeGame() {
   isCircleTurn = false;
   // Aktiviert das Spielbrett für das Setzen von Kreisen und Kreuzen.
   activateBoardForClick();
-}
+};
 
-function initializeGraphicalBoard() {
+const initializeGraphicalBoard = () => {
   // Erstellt die Leinwände für das Spielbrett
   // über die Funktion createCanvas
   // und fügt sie boardContainer hinzu.
@@ -45,18 +45,18 @@ function initializeGraphicalBoard() {
       lineBreak.id = "br" + i;
     }
   }
-}
+};
 
-function createCanvas(id) {
+const createCanvas = (id) => {
   // Erstellt Leinwände für das Spielbrett.
   const canvas = document.createElement("canvas");
   canvas.id = id;
   canvas.width = widthTiles;
   canvas.height = widthTiles;
   return canvas;
-}
+};
 
-function drawSquaresInitial() {
+const drawSquaresInitial = () => {
   // Zeichnet am Anfang des Spiels 9 leere Kacheln.
   for (let i = 0; i < 9; i++) {
     const nameCanvas = "canvas" + i;
@@ -68,9 +68,9 @@ function drawSquaresInitial() {
     context.fillRect(1, 1, widthTiles - 1, widthTiles - 1);
     context.strokeRect(1, 1, widthTiles - 1, widthTiles - 1);
   }
-}
+};
 
-function createBoardInformation() {
+const createBoardInformation = () => {
   // Erstellt ein Instanz des Objekts board um
   // Informationen zum Spielbrett zu speichern.
   let emptyBoard = [];
@@ -79,52 +79,53 @@ function createBoardInformation() {
   }
   const board = new Board(emptyBoard);
   return board;
-}
+};
 
-function activateBoardForClick() {
-  // Fügt Event-Listener für das Klickereignis auf die Kacheln hinzu.
-  for (let i = 0; i < 9; i++) {
-    const canvas = document.getElementById("canvas" + i);
-    canvas.addEventListener("click", clickHandler);
-  }
-}
+const activateBoardForClick = () => {
+  // Fügt Event-Listener für das Klickereignis auf das Spielbrett hinzu.
+  const boardContainer = document.getElementById("boardContainer");
+  boardContainer.addEventListener("click", clickHandler);
+};
 
-function clickHandler(event) {
+const clickHandler = (event) => {
   // Das Spielbrett wird aktualisiert,
   // der aktive Spieler wird gewechselt,
   // gegebenenfalls wird das Ende des Spiels ausgelöst.
 
-  // Bestimmt auf welches Feld geklickt wurde.
-  const fieldName = event.target.id;
-  const field = Number(fieldName.slice(-1));
-  // Falls sich schon ein Symbol in der geklickten Kachel befindet,
-  // passiert nichts.
-  if (board.fields[field] == null) {
-    // Aktualisiert das Spielbrett.
-    updateBoard(field);
-    // Wechselt den aktiven Spieler.
-    isCircleTurn = changeTurnPlayers();
-    // Prüft, ob Bedingungen für das Spielende erfüllt sind.
-    const endOfGame = checkforEndOfGame();
-    // Gegebenenfalls wird das Ende des Spiels ausgelöst.
-    if (endOfGame[0] === true) {
-      // Spielbrett wird deaktiviert.
-      isCircleTurn = null;
-      // Eine Meldung zum Spielende wird ausgegeben.
-      // Gegebenenfalls wird das Spielbrett zurückgesetzt.
-      outputEndOfGame(endOfGame[1]);
+  // Prüft, ob auf eine der Spielbrettkacheln geklickt wurde.
+  const clickedElement = event.target;
+  if (clickedElement.tagName === "CANVAS") {
+    // Bestimmt auf welches Feld geklickt wurde.
+    const field = Number(event.target.id.slice(-1));
+    // Falls sich schon ein Symbol in der geklickten Kachel befindet,
+    // passiert nichts.
+    if (board.fields[field] == null) {
+      // Aktualisiert das Spielbrett.
+      updateBoard(field);
+      // Wechselt den aktiven Spieler.
+      isCircleTurn = changeTurnPlayers();
+      // Prüft, ob Bedingungen für das Spielende erfüllt sind.
+      const endOfGame = checkforEndOfGame();
+      // Gegebenenfalls wird das Ende des Spiels ausgelöst.
+      if (endOfGame[0] === true) {
+        // Spielbrett wird deaktiviert.
+        isCircleTurn = null;
+        // Eine Meldung zum Spielende wird ausgegeben.
+        // Gegebenenfalls wird das Spielbrett zurückgesetzt.
+        outputEndOfGame(endOfGame[1]);
+      }
     }
   }
-}
+};
 
-function updateBoard(field) {
+const updateBoard = (field) => {
   // Zeichnet ein Kreuz oder einen Kreis.
   drawSymbol(field);
   // Aktualisiert das Objekt board.
   isCircleTurn === true ? (board.fields[field] = 0) : (board.fields[field] = 1);
-}
+};
 
-function drawSymbol(field) {
+const drawSymbol = (field) => {
   // Zeichnet entweder ein Kreuz oder einen Kreis.
   const nameCanvas = "canvas" + field;
   const canvas = document.getElementById(nameCanvas);
@@ -149,15 +150,15 @@ function drawSymbol(field) {
     context.lineTo(widthTiles - symbolPadding, symbolPadding);
   }
   context.stroke();
-}
+};
 
-function changeTurnPlayers() {
+const changeTurnPlayers = () => {
   // ändert welcher Spieler am Zug ist
   isCircleTurn === true ? (isCircleTurn = false) : (isCircleTurn = true);
   return isCircleTurn;
-}
+};
 
-function checkforEndOfGame() {
+const checkforEndOfGame = () => {
   // Prüft, ob einer der Spieler drei gleiche Symbole in einer Reihe setzen konnte
   // oder ob alle Felder Symbole enthalten ohne,
   // dass drei gleiche Symbole in einer Reiche zu finden sind.
@@ -211,9 +212,9 @@ function checkforEndOfGame() {
   // der in der Funktion outputEndOfGame ausgegeben wird.
   // Sonst wird false und ein leerer String zurückgegeben.
   return [endOfGame, text];
-}
+};
 
-function outputEndOfGame(textEndOfGame) {
+const outputEndOfGame = (textEndOfGame) => {
   // Erzeugt eine Textausgabe zum Spielende.
   document.getElementById("outputEnd").className = "show";
   document.getElementById("outputEnd").innerHTML = textEndOfGame;
@@ -222,16 +223,16 @@ function outputEndOfGame(textEndOfGame) {
     "<br>Wollt ihr noch mal spielen?";
   document.getElementById("outputEnd").innerHTML +=
     '<br><br><input value="Ja" onclick="resetGame()" type="button"></input>';
-}
+};
 
-function resetGame() {
+const resetGame = () => {
   // Setzt das Spiel zurück damit
   // es noch mal gespielt werden kann.
   removeCanvases();
   initializeGame();
-}
+};
 
-function removeCanvases() {
+const removeCanvases = () => {
   // Entfernt die Kacheln und die Meldung zum Spielende.
   const boardContainer = document.getElementById("boardContainer");
   document.getElementById("outputEnd").innerHTML = "";
@@ -245,6 +246,6 @@ function removeCanvases() {
     const canvas = document.getElementById(nameCanvas);
     boardContainer.removeChild(canvas);
   }
-}
+};
 
 initializeGame();

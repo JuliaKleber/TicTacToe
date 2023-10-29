@@ -1,0 +1,55 @@
+body{
+    font-family: arial;
+    font-size: 18px;
+    background-color:#f7f6d6;
+    margin: 0px;
+}
+
+header{
+    background-image: linear-gradient(
+        to right,
+        #B5D5D8,
+        #fcb1f2,
+        #ffff00);
+    padding: 10px;
+    top: 0px;
+    margin: 0px 0px 45px 0px;
+    position: sticky;
+    text-align: center;
+    font-size: 35px;
+}
+
+p{
+    text-align: center;
+}
+
+#boardContainer{
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+}
+
+canvas{
+    width: 140px;
+    height: 140px;
+    padding: 0px 3px;
+}
+
+#outputEnd{
+    margin: 20px 0px 77px 0px;
+    text-align: center;
+}
+
+footer{
+    background-image: linear-gradient(
+        to right,
+        #B5D5D8,
+        #fcb1f2,
+        #ffff00);
+    position: sticky;
+    bottom: 0px;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+    font-size: 15px;
+    text-align: center;
+}

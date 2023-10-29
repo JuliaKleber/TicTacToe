@@ -35,7 +35,7 @@ class Board {
   }
 }
 
-function initializeGamePart1() {
+const initializeGamePart1 = () => {
   // Bereitet das Spiel vor.
 
   // Wird für die Strategie der KI benötigt.
@@ -51,9 +51,9 @@ function initializeGamePart1() {
   drawSquaresInitial();
   // Fragt, welcher Spieler anfangen soll.
   selectStartingPlayer();
-}
+};
 
-function initializeGamePart2() {
+const initializeGamePart2 = () => {
   // Bereitet das Spiel vor.
 
   // Entweder startet der Computer
@@ -63,9 +63,9 @@ function initializeGamePart2() {
   startPlayerComputer == true
     ? setTimeout(computerTurnCross, timeDelay)
     : humanTurnOn();
-}
+};
 
-function initializeGraphicalBoard() {
+const initializeGraphicalBoard = () => {
   // Erstellt die Leinwände für das Spielbrett
   // über die Funktion createCanvas
   // und fügt sie boardContainer hinzu.
@@ -79,18 +79,18 @@ function initializeGraphicalBoard() {
       lineBreak.id = "br" + i;
     }
   }
-}
+};
 
-function createCanvas(id) {
+const createCanvas = (id) => {
   // Erstellt Leinwände für das Spielbrett.
   const canvas = document.createElement("canvas");
   canvas.id = id;
   canvas.width = widthTiles;
   canvas.height = widthTiles;
   return canvas;
-}
+};
 
-function drawSquaresInitial() {
+const drawSquaresInitial = () => {
   // Zeichnet am Anfang des Spiels 9 leere Kacheln.
   for (let i = 0; i < 9; i++) {
     const myCanvas = "myCanvas" + i;
@@ -102,23 +102,24 @@ function drawSquaresInitial() {
     context.fillRect(1, 1, widthTiles - 1, widthTiles - 1);
     context.strokeRect(1, 1, widthTiles - 1, widthTiles - 1);
   }
-}
+};
 
-function createBoardInformation() {
+const createBoardInformation = () => {
   // Erstellt ein Instanz des Objekts board um
   // Informationen zum Spielbrett zu speichern.
-  let emptyBoard = [];
+  const emptyBoard = [];
   for (let i = 0; i < 9; i++) {
     emptyBoard.push(null);
   }
   const board = new Board(emptyBoard);
   return board;
-}
+};
 
-function selectStartingPlayer() {
+const selectStartingPlayer = () => {
   // Es wird ein Paragraph p erstellt mit der Frage wer das Spiel beginnen soll.
   // Außerdem werden drei Buttons, "Ich", "Computer" und "zufällig" erstellt.
   const outputStart = document.getElementById("outputStart");
+  outputStart.className = "show";
   const questionStartPlayer = document.createElement("p");
   questionStartPlayer.id = "questionStartPlayer";
   outputStart.appendChild(questionStartPlayer);
@@ -134,19 +135,19 @@ function selectStartingPlayer() {
   // erscheint ein Text mit der Information wer das Spiel beginnt.
   // Mit der Spielvorbereitung wird fortgefahren
   // indem initializeGamePart2 aufgerufen wird.
-  buttonHuman.addEventListener("click", function (event) {
+  buttonHuman.addEventListener("click", (event) => {
     text += "Du beginnst! Dein Symbol ist Kreuz.";
     questionStartPlayer.innerHTML = text;
     startPlayerComputer = false;
     initializeGamePart2();
   });
-  buttonComputer.addEventListener("click", function (event) {
+  buttonComputer.addEventListener("click", (event) => {
     text += "Der Computer beginnt! Dein Symbol ist Kreis.";
     questionStartPlayer.innerHTML = text;
     startPlayerComputer = true;
     initializeGamePart2();
   });
-  buttonRandom.addEventListener("click", function (event) {
+  buttonRandom.addEventListener("click", (event) => {
     const random = Math.floor(Math.random() * 2);
     if (random == 0) {
       text += "Du beginnst! Dein Symbol ist Kreuz.";
@@ -160,64 +161,61 @@ function selectStartingPlayer() {
       initializeGamePart2();
     }
   });
-}
+};
 
-function createButton(buttonName, value) {
+const createButton = (buttonName, value) => {
   // Mit dieser Funktion wird ein Button erstellt.
   const button = document.createElement("input");
   button.id = buttonName;
   button.type = "button";
   button.value = value;
   return button;
-}
+};
 
-function humanTurnOn() {
+const humanTurnOn = () => {
   // Fügt Event-Listener für das Klickereignis auf die Kacheln hinzu.
-  for (let i = 0; i < 9; i++) {
-    const canvas = document.getElementById("myCanvas" + i);
-    canvas.addEventListener("click", humanTurn);
-  }
-}
+  const boardContainer = document.getElementById("boardContainer");
+  boardContainer.addEventListener("click", humanTurn);
+};
 
-function humanTurnOff() {
+const humanTurnOff = () => {
   // Entfernt Event-Listener für das Klickereignis auf die Kacheln.
-  for (let i = 0; i < 9; i++) {
-    const canvas = document.getElementById("myCanvas" + i);
-    canvas.removeEventListener("click", humanTurn);
-  }
-}
+  const boardContainer = document.getElementById("boardContainer");
+  boardContainer.removeEventListener("click", humanTurn);
+};
 
-function humanTurn(event) {
+const humanTurn = (event) => {
   // Der Spieler ist am Zug.
   // Das Spielbrett wird aktualisiert,
   // gegebenenfalls wird das Ende des Spiels ausgelöst,
   // der aktive Spieler wird gewechselt.
-
-  // Bestimmt auf welches Feld geklickt wurde.
-  const fieldName = event.target.id;
-  const field = Number(fieldName.slice(-1));
-  // Falls sich schon ein Symbol in der geklickten Kachel befindet,
-  // passiert nichts.
-  if (board.fields[field] == null) {
-    // Aktualisiert das Spielbrett.
-    changeOfBoard(field);
-    // Event Handler für das Klickereignis auf
-    // die Kacheln des Spielbretts wird entfernt.
-    humanTurnOff();
-    // Prüft, ob Bedingungen für das Spielende erfüllt sind.
-    const endOfGame = checkForEndOfGame();
-    // Gegebenenfalls wird das Ende des Spiels ausgelöst.
-    // Dann wird eine Meldung zum Spielende ausgegeben.
-    // Gegebenenfalls wird das Spielbrett zurückgesetzt.
-    endOfGame[0] === true && outputEndOfGame(endOfGame[1]);
-    // Der Computergegner ist nun an der Reihe.
-    startPlayerComputer === true
-      ? setTimeout(computerTurnCross, timeDelay)
-      : setTimeout(computerTurnCircle, timeDelay);
+  const clickedElement = event.target.tagName;
+  if (clickedElement === "CANVAS") {
+    // Bestimmt auf welches Feld geklickt wurde.
+    const field = Number(event.target.id.slice(-1));
+    // Falls sich schon ein Symbol in der geklickten Kachel befindet,
+    // passiert nichts.
+    if (board.fields[field] == null) {
+      // Aktualisiert das Spielbrett.
+      changeOfBoard(field);
+      // Event Handler für das Klickereignis auf
+      // die Kacheln des Spielbretts wird entfernt.
+      humanTurnOff();
+      // Prüft, ob Bedingungen für das Spielende erfüllt sind.
+      const endOfGame = checkForEndOfGame();
+      // Gegebenenfalls wird das Ende des Spiels ausgelöst.
+      // Dann wird eine Meldung zum Spielende ausgegeben.
+      // Gegebenenfalls wird das Spielbrett zurückgesetzt.
+      endOfGame[0] === true && outputEndOfGame(endOfGame[1]);
+      // Der Computergegner ist nun an der Reihe.
+      startPlayerComputer === true
+        ? setTimeout(computerTurnCross, timeDelay)
+        : setTimeout(computerTurnCircle, timeDelay);
+    }
   }
-}
+};
 
-function computerTurnCross() {
+const computerTurnCross = () => {
   // Das Symbol wird zu Kreuz gewechselt.
   isCircleTurn = false;
   // Prüft, ob sich schon zwei Kreuze in einer Reihe befinden.
@@ -295,9 +293,9 @@ function computerTurnCross() {
     isCircleTurn = true;
     humanTurnOn();
   }
-}
+};
 
-function computerTurnCircle() {
+const computerTurnCircle = () => {
   // Das Symbol wird zu Kreis gewechselt.
   isCircleTurn = true;
   // Prüft, ob sich schon zwei Kreise in einer Reihe befinden.
@@ -383,9 +381,9 @@ function computerTurnCircle() {
     isCircleTurn = false;
     humanTurnOn();
   }
-}
+};
 
-function checkForTwoInARowAndCompleteIt(symbol) {
+const checkForTwoInARowAndCompleteIt = (symbol) => {
   // Es wird geprüft, ob sich zwei gleiche Symbole
   // in den Reihen, Spalten und Diagonalen befinden.
   // Sobald eine Reihe, Spalte oder Diagonale gefunden wurde,
@@ -490,9 +488,9 @@ function checkForTwoInARowAndCompleteIt(symbol) {
       return true;
     }
   }
-}
+};
 
-function changeOfBoard(field) {
+const changeOfBoard = (field) => {
   // Zeichnet ein Kreuz oder einen Kreis.
   drawSymbol(field);
   // Aktualisiert das Objekt board.
@@ -503,9 +501,9 @@ function changeOfBoard(field) {
     board.fields[field] = 1;
     incrementLine(field, "cross");
   }
-}
+};
 
-function drawSymbol(field) {
+const drawSymbol = (field) => {
   // Zeichnet entweder ein Kreuz oder einen Kreis.
   const myCanvas = "myCanvas" + field;
   const canvas = document.getElementById(myCanvas);
@@ -530,9 +528,9 @@ function drawSymbol(field) {
     context.lineTo(widthTiles - symbolPadding, symbolPadding);
   }
   context.stroke();
-}
+};
 
-function incrementLine(field, symbol) {
+const incrementLine = (field, symbol) => {
   // Aktualisiert den Wert für die Anzahl der Symbole
   // in den Reihen, Spalten und Diagonalen des Boards.
   if (field == 0) {
@@ -577,9 +575,9 @@ function incrementLine(field, symbol) {
     board.column3[symbol]++;
     board.diagonal1[symbol]++;
   }
-}
+};
 
-function checkForEndOfGame() {
+const checkForEndOfGame = () => {
   // Prüft, ob einer der Spieler drei gleiche Symbole in einer Reihe setzen konnte
   // oder ob alle Felder Symbole enthalten ohne,
   // dass drei gleiche Symbole in einer Reiche zu finden sind.
@@ -605,7 +603,9 @@ function checkForEndOfGame() {
       board.fields[b] === 1 &&
       board.fields[c] === 1
     ) {
-      text = "Spieler 1 hat gewonnen!";
+      startPlayerComputer
+        ? (text = "Der Computer hat gewonnen!")
+        : (text = "Du hast gewonnen!");
       endOfGame = true;
       break;
     }
@@ -618,7 +618,9 @@ function checkForEndOfGame() {
       board.fields[b] === 0 &&
       board.fields[c] === 0
     ) {
-      text = "Spieler 2 hat gewonnen!";
+      startPlayerComputer
+        ? (text = "Du hast gewonnen!")
+        : (text = "Der Computer hat gewonnen!");
       endOfGame = true;
       break;
     }
@@ -633,10 +635,11 @@ function checkForEndOfGame() {
   // der in der Funktion outputEndOfGame ausgegeben wird.
   // Sonst werden false und ein leerer String zurückgegeben.
   return [endOfGame, text];
-}
+};
 
-function outputEndOfGame(textEndOfGame) {
+const outputEndOfGame = (textEndOfGame) => {
   // Erzeugt eine Textausgabe zum Spielende.
+  document.getElementById("outputStart").className = "hidden";
   document.getElementById("outputEnd").className = "show";
   document.getElementById("outputEnd").innerHTML = textEndOfGame;
   // Frage nach erneutem Spiel.
@@ -644,16 +647,16 @@ function outputEndOfGame(textEndOfGame) {
     "<br>Willst du noch mal spielen?";
   document.getElementById("outputEnd").innerHTML +=
     '&nbsp;&nbsp;<input value="Ja" onclick="resetGame()" type="button"></input>';
-}
+};
 
-function resetGame() {
+const resetGame = () => {
   // setzt das Spiel zurück damit
   // es noch mal gespielt werden kann.
   removeCanvases();
   initializeGamePart1();
-}
+};
 
-function removeCanvases() {
+const removeCanvases = () => {
   // Entfernt die Kacheln und die Meldung zum Spielende.
   const outputStart = document.getElementById("outputStart");
   const questionStartPlayer = document.getElementById("questionStartPlayer");
@@ -670,6 +673,6 @@ function removeCanvases() {
     const canvas = document.getElementById(myCanvas);
     boardContainer.removeChild(canvas);
   }
-}
+};
 
 initializeGamePart1();
