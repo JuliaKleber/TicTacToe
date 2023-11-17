@@ -99,7 +99,7 @@ const clickHandler = (event) => {
     const field = Number(event.target.id.slice(-1));
     // Falls sich schon ein Symbol in der geklickten Kachel befindet,
     // passiert nichts.
-    if (board.fields[field] == null) {
+    if (board.fields[field] === null) {
       // Aktualisiert das Spielbrett.
       updateBoard(field);
       // Wechselt den aktiven Spieler.

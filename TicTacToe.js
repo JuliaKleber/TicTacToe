@@ -8,10 +8,12 @@ const symbolPadding = 20;
 let isCircleTurn;
 // Speichert Informationen zum Zustand des Spielbretts.
 let board;
-// Wird für die Strategie der KI benötigt.
+// Speichert, ob ein oder zwei Menschen spielen
+let numberHumanPlayers;
+// Legt fest wer das Spiel beginnt, falls es nur einen menschlichen Spieler gibt.
+let isComputerStartPlayer;
+// Wird für die Strategie der KI benötigt, falls es nur einen menschlichen Spieler gibt.
 let numberTurnKI;
-// Legt fest wer das Spiel beginnt.
-let startPlayerComputer;
 // Bestimmt die Zeitverzögerung der Computerspielzüge.
 const timeDelay = 350;
 
@@ -21,7 +23,8 @@ class Board {
   // Die Werte sind null (kein Kreis und kein Kreuz),
   // 1 (Kreuz) und 0 (Kreis).
   // Außerdem wird gespeichert, wie viele Kreuze und Kreise
-  // sich in den Reihen, Spalten und Diagonalen befinden.
+  // sich in den Reihen, Spalten und Diagonalen befinden,
+  // falls es nur einen menschlichen Spieler gibt.
   constructor(fields) {
     this.fields = fields;
     this.row1 = { cross: 0, circle: 0 };
@@ -35,23 +38,6 @@ class Board {
   }
 }
 
-const initializeGamePart1 = () => {
-  // Bereitet das Spiel vor.
-
-  // Wird für die Strategie der KI benötigt.
-  numberTurnKI = 1;
-  // Kreuz fängt an.
-  isCircleTurn = false;
-  // Initialisiert das Objekt board um die
-  // Information über das Spielbrett zu speichern.
-  board = createBoardInformation();
-  // Erstellt die leeren Leinwände für das Spiel
-  initializeGraphicalBoard();
-  // Zeichnet die Kacheln.
-  drawSquaresInitial();
-  // Fragt, welcher Spieler anfangen soll.
-  selectStartingPlayer();
-};
 
 const initializeGamePart2 = () => {
   // Bereitet das Spiel vor.
@@ -60,9 +46,9 @@ const initializeGamePart2 = () => {
   // mit einer kleinen Zeitverzögerung
   // mit dem Setzen von Kreuzen
   // oder der Spieler startet.
-  startPlayerComputer === true
-    ? setTimeout(computerTurnCross, timeDelay)
-    : humanTurnOn();
+  isComputerStartPlayer === true
+  ? setTimeout(computerTurnCross, timeDelay)
+  : humanTurnOn();
 };
 
 const initializeGraphicalBoard = () => {
@@ -138,13 +124,13 @@ const selectStartingPlayer = () => {
   buttonHuman.addEventListener("click", (event) => {
     text += "Du beginnst! Dein Symbol ist Kreuz.";
     questionStartPlayer.innerHTML = text;
-    startPlayerComputer = false;
+    isComputerStartPlayer = false;
     initializeGamePart2();
   });
   buttonComputer.addEventListener("click", (event) => {
     text += "Der Computer beginnt! Dein Symbol ist Kreis.";
     questionStartPlayer.innerHTML = text;
-    startPlayerComputer = true;
+    isComputerStartPlayer = true;
     initializeGamePart2();
   });
   buttonRandom.addEventListener("click", (event) => {
@@ -152,12 +138,12 @@ const selectStartingPlayer = () => {
     if (random === 0) {
       text += "Du beginnst! Dein Symbol ist Kreuz.";
       questionStartPlayer.innerHTML = text;
-      startPlayerComputer = false;
+      isComputerStartPlayer = false;
       initializeGamePart2();
     } else {
       text += "Der Computer beginnt! Dein Symbol ist Kreis.";
       questionStartPlayer.innerHTML = text;
-      startPlayerComputer = true;
+      isComputerStartPlayer = true;
       initializeGamePart2();
     }
   });
@@ -208,9 +194,9 @@ const humanTurn = (event) => {
       // Gegebenenfalls wird das Spielbrett zurückgesetzt.
       endOfGame[0] === true && outputEndOfGame(endOfGame[1]);
       // Der Computergegner ist nun an der Reihe.
-      startPlayerComputer === true
-        ? setTimeout(computerTurnCross, timeDelay)
-        : setTimeout(computerTurnCircle, timeDelay);
+      isComputerStartPlayer === true
+      ? setTimeout(computerTurnCross, timeDelay)
+      : setTimeout(computerTurnCircle, timeDelay);
     }
   }
 };
@@ -227,7 +213,7 @@ const computerTurnCross = () => {
   // Falls ja, wird ein Kreuz in die Reihe gesetzt
   // und isReactionNeeded wird auf true gesetzt.
   isActionNeeded != true &&
-    (isReactionNeeded = checkForTwoInARowAndCompleteIt("circle"));
+  (isReactionNeeded = checkForTwoInARowAndCompleteIt("circle"));
   // Falls isActionNeeded und isReactionNeeded beide false sind,
   // versucht der Computer Kreuze so zu setzen, dass er gewinnen kann.
   if (isActionNeeded != true && isReactionNeeded != true) {
@@ -246,11 +232,11 @@ const computerTurnCross = () => {
       board.fields[2] === null &&
       board.fields[1] === null &&
       board.fields[5] === 0
-    ) {
-      changeOfBoard(2);
-      numberTurnKI++;
-    } else if (
-      numberTurnKI === 3 &&
+      ) {
+        changeOfBoard(2);
+        numberTurnKI++;
+      } else if (
+        numberTurnKI === 3 &&
       board.fields[8] === 1 &&
       board.fields[6] === null
     ) {
@@ -262,15 +248,15 @@ const computerTurnCross = () => {
       board.fields[1] === null &&
       board.fields[2] === null &&
       board.fields[7] === null
-    ) {
-      changeOfBoard(1);
-      numberTurnKI++;
-    } else if (
-      numberTurnKI === 3 &&
-      board.fields[4] === 1 &&
-      board.fields[3] === null
-    ) {
-      changeOfBoard(3);
+      ) {
+        changeOfBoard(1);
+        numberTurnKI++;
+      } else if (
+        numberTurnKI === 3 &&
+        board.fields[4] === 1 &&
+        board.fields[3] === null
+        ) {
+          changeOfBoard(3);
       numberTurnKI++;
     } else {
       for (let i = 0; i < 9; i++) {
@@ -307,7 +293,7 @@ const computerTurnCircle = () => {
   // Falls ja, wird ein Kreis in die Reihe gesetzt
   // und isReactionNeeded wird auf true gesetzt.
   isActionNeeded != true &&
-    (isReactionNeeded = checkForTwoInARowAndCompleteIt("cross"));
+  (isReactionNeeded = checkForTwoInARowAndCompleteIt("cross"));
   // Falls isActionNeeded und isReactionNeeded beide false sind,
   // versucht der Computer Kreise so zu setzen, dass er gewinnen kann.
   if (isActionNeeded != true && isReactionNeeded != true) {
@@ -321,13 +307,13 @@ const computerTurnCircle = () => {
       numberTurnKI === 2 &&
       board.fields[0] === 0 &&
       board.fields[8] === null
-    ) {
-      changeOfBoard(8);
-      numberTurnKI++;
-    } else if (
-      numberTurnKI === 2 &&
-      board.fields[0] === 0 &&
-      board.fields[6] === null
+      ) {
+        changeOfBoard(8);
+        numberTurnKI++;
+      } else if (
+        numberTurnKI === 2 &&
+        board.fields[0] === 0 &&
+        board.fields[6] === null
     ) {
       changeOfBoard(6);
       numberTurnKI++;
@@ -335,35 +321,36 @@ const computerTurnCircle = () => {
       numberTurnKI === 2 &&
       board.fields[0] === 0 &&
       board.fields[2] === null
-    ) {
-      changeOfBoard(2);
-      numberTurnKI++;
-    } else if (
-      numberTurnKI === 2 &&
-      (board.fields[0] === 1 || board.fields[2] === 1) &&
+      ) {
+        changeOfBoard(2);
+        numberTurnKI++;
+      } else if (
+        numberTurnKI === 2 &&
+        (board.fields[0] === 1 || board.fields[2] === 1) &&
       board.fields[1] === null
     ) {
       changeOfBoard(1);
       numberTurnKI++;
     } else if (
       numberTurnKI === 2 &&
-      (board.fields[6] === 1 || board.fields[8] === 1) & (board.fields[7] === null)
-    ) {
-      changeOfBoard(7);
-      numberTurnKI++;
-    } else if (numberTurnKI === 3 && board.fields[6] === null) {
-      changeOfBoard(6);
-      numberTurnKI++;
-    } else if (numberTurnKI === 3 && board.fields[2] === null) {
-      changeOfBoard(2);
-      numberTurnKI++;
-    } else if (numberTurnKI === 3 && board.fields[8] === null) {
-      changeOfBoard(8);
-      numberTurnKI++;
-    } else {
-      for (let i = 0; i < 9; i++) {
-        if (board.fields[i] === null) {
-          changeOfBoard(i);
+      (board.fields[6] === 1 || board.fields[8] === 1) &
+      (board.fields[7] === null)
+      ) {
+        changeOfBoard(7);
+        numberTurnKI++;
+      } else if (numberTurnKI === 3 && board.fields[6] === null) {
+        changeOfBoard(6);
+        numberTurnKI++;
+      } else if (numberTurnKI === 3 && board.fields[2] === null) {
+        changeOfBoard(2);
+        numberTurnKI++;
+      } else if (numberTurnKI === 3 && board.fields[8] === null) {
+        changeOfBoard(8);
+        numberTurnKI++;
+      } else {
+        for (let i = 0; i < 9; i++) {
+          if (board.fields[i] === null) {
+            changeOfBoard(i);
           break;
         }
       }
@@ -519,39 +506,39 @@ const drawSymbol = (field) => {
       (widthTiles - 2 * symbolPadding) / 2,
       Math.PI,
       3 * Math.PI
-    );
-    // Zeichnet ein Kreuz
-  } else if (isCircleTurn === false) {
-    context.moveTo(symbolPadding, symbolPadding);
-    context.lineTo(widthTiles - symbolPadding, widthTiles - symbolPadding);
-    context.moveTo(symbolPadding, widthTiles - symbolPadding);
-    context.lineTo(widthTiles - symbolPadding, symbolPadding);
-  }
-  context.stroke();
-};
+      );
+      // Zeichnet ein Kreuz
+    } else if (isCircleTurn === false) {
+      context.moveTo(symbolPadding, symbolPadding);
+      context.lineTo(widthTiles - symbolPadding, widthTiles - symbolPadding);
+      context.moveTo(symbolPadding, widthTiles - symbolPadding);
+      context.lineTo(widthTiles - symbolPadding, symbolPadding);
+    }
+    context.stroke();
+  };
 
-const incrementLine = (field, symbol) => {
-  // Aktualisiert den Wert für die Anzahl der Symbole
-  // in den Reihen, Spalten und Diagonalen des Boards.
-  if (field === 0) {
-    board.row1[symbol]++;
-    board.column1[symbol]++;
-    board.diagonal1[symbol]++;
-  }
-  if (field === 1) {
-    board.row1[symbol]++;
-    board.column2[symbol]++;
-  }
-  if (field === 2) {
-    board.row1[symbol]++;
-    board.column3[symbol]++;
-    board.diagonal2[symbol]++;
-  }
-  if (field === 3) {
-    board.row2[symbol]++;
-    board.column1[symbol]++;
-  }
-  if (field === 4) {
+  const incrementLine = (field, symbol) => {
+    // Aktualisiert den Wert für die Anzahl der Symbole
+    // in den Reihen, Spalten und Diagonalen des Boards.
+    if (field === 0) {
+      board.row1[symbol]++;
+      board.column1[symbol]++;
+      board.diagonal1[symbol]++;
+    }
+    if (field === 1) {
+      board.row1[symbol]++;
+      board.column2[symbol]++;
+    }
+    if (field === 2) {
+      board.row1[symbol]++;
+      board.column3[symbol]++;
+      board.diagonal2[symbol]++;
+    }
+    if (field === 3) {
+      board.row2[symbol]++;
+      board.column1[symbol]++;
+    }
+    if (field === 4) {
     board.row2[symbol]++;
     board.column2[symbol]++;
     board.diagonal1[symbol]++;
@@ -602,25 +589,25 @@ const checkForEndOfGame = () => {
       board.fields[a] === 1 &&
       board.fields[b] === 1 &&
       board.fields[c] === 1
-    ) {
-      startPlayerComputer
+      ) {
+        isComputerStartPlayer
         ? (text = "Der Computer hat gewonnen!")
         : (text = "Du hast gewonnen!");
-      endOfGame = true;
-      break;
+        endOfGame = true;
+        break;
+      }
     }
-  }
-  // Gewinnbedingungen für Spieler 2 (Kreis)
-  for (const pattern of winPatterns) {
-    const [a, b, c] = pattern;
-    if (
-      board.fields[a] === 0 &&
-      board.fields[b] === 0 &&
-      board.fields[c] === 0
-    ) {
-      startPlayerComputer
-        ? (text = "Du hast gewonnen!")
-        : (text = "Der Computer hat gewonnen!");
+    // Gewinnbedingungen für Spieler 2 (Kreis)
+    for (const pattern of winPatterns) {
+      const [a, b, c] = pattern;
+      if (
+        board.fields[a] === 0 &&
+        board.fields[b] === 0 &&
+        board.fields[c] === 0
+        ) {
+          isComputerStartPlayer
+          ? (text = "Du hast gewonnen!")
+          : (text = "Der Computer hat gewonnen!");
       endOfGame = true;
       break;
     }
@@ -644,9 +631,9 @@ const outputEndOfGame = (textEndOfGame) => {
   document.getElementById("outputEnd").innerHTML = textEndOfGame;
   // Frage nach erneutem Spiel.
   document.getElementById("outputEnd").innerHTML +=
-    "<br>Willst du noch mal spielen?";
+  "<br>Willst du noch mal spielen?";
   document.getElementById("outputEnd").innerHTML +=
-    '&nbsp;&nbsp;<input value="Ja" onclick="resetGame()" type="button"></input>';
+  '&nbsp;&nbsp;<input value="Ja" onclick="resetGame()" type="button"></input>';
 };
 
 const resetGame = () => {
@@ -675,4 +662,22 @@ const removeCanvases = () => {
   }
 };
 
-initializeGamePart1();
+const initializeGamePart = () => {
+  // Bereitet das Spiel vor.
+
+  // Wird für die Strategie der KI benötigt.
+  numberTurnKI = 1;
+  // Kreuz fängt an.
+  isCircleTurn = false;
+  // Initialisiert das Objekt board um die
+  // Information über das Spielbrett zu speichern.
+  board = createBoardInformation();
+  // Erstellt die leeren Leinwände für das Spiel
+  initializeGraphicalBoard();
+  // Zeichnet die Kacheln.
+  drawSquaresInitial();
+  // Fragt, welcher Spieler anfangen soll.
+  if (numberHumanPlayers === 1) ? selectStartingPlayer() : activateBoardForClick();
+};
+
+initializeGamePart();
