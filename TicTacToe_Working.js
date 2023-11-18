@@ -9,7 +9,7 @@ let isCircleTurn;
 // Speichert Informationen zum Zustand des Spielbretts.
 let board;
 // Speichert, ob ein oder zwei Menschen spielen
-let numberHumanPlayers = 1;
+let numberHumanPlayers;
 // Legt fest wer das Spiel beginnt, falls es nur einen menschlichen Spieler gibt.
 let isComputerStartPlayer;
 // Wird für die Strategie der KI benötigt, falls es nur einen menschlichen Spieler gibt.
@@ -48,13 +48,13 @@ const resetGame = () => {
 // Entfernt die Kacheln und die Meldung zum Spielende.
 const removeCanvasesAndOutputs = () => {
   if (numberHumanPlayers === 1) {
-    const outputStart = document.getElementById("outputStart");
+    const outputStart = document.getElementById("output-start");
     const questionStartPlayer = document.getElementById("questionStartPlayer");
     outputStart.removeChild(questionStartPlayer);
   }
   const boardContainer = document.getElementById("boardContainer");
-  document.getElementById("outputEnd").innerHTML = "";
-  document.getElementById("outputEnd").className = "hidden";
+  document.getElementById("output-end").innerHTML = "";
+  document.getElementById("output-end").className = "hidden";
   const br2 = document.getElementById("br2");
   boardContainer.removeChild(br2);
   const br5 = document.getElementById("br5");
@@ -94,15 +94,15 @@ const checkForEndOfGame = () => {
     ) {
       if (numberHumanPlayers === 1) {
         isComputerStartPlayer
-        ? (text = "Der Computer hat gewonnen!")
-        : (text = "Du hast gewonnen!");
+          ? (text = "Der Computer hat gewonnen!")
+          : (text = "Du hast gewonnen!");
       } else {
         text = "Spieler 1 hat gewonnen!";
       }
       isEndOfGame = true;
       return [isEndOfGame, text];
     }
-  })
+  });
   // Gewinnbedingungen für Spieler 2 (Kreis)
   winningPatterns.forEach((pattern) => {
     const [a, b, c] = pattern;
@@ -113,15 +113,15 @@ const checkForEndOfGame = () => {
     ) {
       if (numberHumanPlayers === 1) {
         isComputerStartPlayer
-        ? (text = "Du hast gewonnen!")
-        : (text = "Der Computer hat gewonnen!");
+          ? (text = "Du hast gewonnen!")
+          : (text = "Der Computer hat gewonnen!");
       } else {
         text = "Spieler 2 hat gewonnen!";
       }
       isEndOfGame = true;
       return [isEndOfGame, text];
     }
-  })
+  });
   // Überprüfung auf ein Unentschieden
   if (!isEndOfGame && !board.fields.includes(null)) {
     text = "Das Spiel ist zu Ende. Keiner hat gewonnen.";
@@ -136,18 +136,18 @@ const checkForEndOfGame = () => {
 
 // Erzeugt eine Textausgabe zum Spielende.
 const outputEndOfGame = (textEndOfGame) => {
-  document.getElementById("outputStart").className = "hidden";
-  document.getElementById("outputEnd").className = "show";
-  document.getElementById("outputEnd").innerHTML = textEndOfGame;
+  document.getElementById("output-start").className = "hidden";
+  document.getElementById("output-end").className = "show";
+  document.getElementById("output-end").innerHTML = textEndOfGame;
   // Frage nach erneutem Spiel.
   if (numberHumanPlayers === 1) {
-    document.getElementById("outputEnd").innerHTML +=
+    document.getElementById("output-end").innerHTML +=
       "<br>Willst du noch mal spielen?";
   } else {
-    document.getElementById("outputEnd").innerHTML +=
+    document.getElementById("output-end").innerHTML +=
       "<br>Wollt ihr noch mal spielen?";
   }
-  document.getElementById("outputEnd").innerHTML +=
+  document.getElementById("output-end").innerHTML +=
     '<br><br><input value="Ja" onclick="resetGame()" type="button"></input>';
 };
 
@@ -586,7 +586,7 @@ const createButton = (buttonName, value) => {
 // Es wird ein Paragraph p erstellt mit der Frage wer das Spiel beginnen soll.
 // Außerdem werden drei Buttons, "Ich", "Computer" und "zufällig" erstellt.
 const selectStartingPlayer = () => {
-  const outputStart = document.getElementById("outputStart");
+  const outputStart = document.getElementById("output-start");
   outputStart.className = "show";
   const questionStartPlayer = document.createElement("p");
   questionStartPlayer.id = "questionStartPlayer";
@@ -613,7 +613,7 @@ const selectStartingPlayer = () => {
     text = "Der Computer beginnt! Dein Symbol ist Kreis.";
     questionStartPlayer.innerHTML = text;
     isComputerStartPlayer = true;
-    setTimeout(computerTurnCross, timeDelay)
+    setTimeout(computerTurnCross, timeDelay);
   });
   buttonRandom.addEventListener("click", (event) => {
     const random = Math.floor(Math.random() * 2);
@@ -626,7 +626,7 @@ const selectStartingPlayer = () => {
       text = "Der Computer beginnt! Dein Symbol ist Kreis.";
       questionStartPlayer.innerHTML = text;
       isComputerStartPlayer = true;
-      setTimeout(computerTurnCross, timeDelay)
+      setTimeout(computerTurnCross, timeDelay);
     }
   });
 };
@@ -659,6 +659,8 @@ const createCanvas = (id) => {
 // und fügt sie boardContainer hinzu.
 const initializeGraphicalBoard = () => {
   const boardContainer = document.getElementById("boardContainer");
+  boardContainer.classList.remove("hidden");
+  boardContainer.classList.add("show");
   for (let i = 0; i < 9; i++) {
     const canvas = createCanvas(`myCanvas${i}`);
     boardContainer.appendChild(canvas);
@@ -683,8 +685,10 @@ const createBoardInformation = () => {
 
 // Bereitet das Spiel vor.
 const startGame = () => {
+  const outputStart = document.getElementById("output-start");
+  outputStart.className = "show";
   // Wird für die Strategie der KI benötigt.
-  numberTurnKI = 1;
+  if (numberHumanPlayers === 1) numberTurnKI = 1;
   // Kreuz fängt an.
   isCircleTurn = false;
   // Initialisiert das Objekt board um die
@@ -696,10 +700,32 @@ const startGame = () => {
   drawSquaresInitial();
   if (numberHumanPlayers === 2) {
     humanTurnOn();
-  } else {
+  } else if (numberHumanPlayers === 1) {
     // Fragt, welcher Spieler anfangen soll.
     selectStartingPlayer();
   }
 };
 
-startGame();
+const setNumberPlayers = () => {
+  // Fragt, ob eine oder zwei Personen spielen wollen.
+  const outputStart = document.getElementById("output-start");
+  const meldungNumberPlayers = document.createElement("p");
+  meldungNumberPlayers.id = "meldungNumberPlayers";
+  outputStart.appendChild(meldungNumberPlayers);
+  const buttonOnePlayer = createButton("buttonOnePlayer", "ein Spieler");
+  meldungNumberPlayers.appendChild(buttonOnePlayer);
+  buttonOnePlayer.addEventListener("click", (event) => {
+    numberHumanPlayers = 1;
+    outputStart.removeChild(meldungNumberPlayers);
+    startGame();
+  });
+  const buttonTwoPlayers = createButton("buttonTwoPlayers", "zwei Spieler");
+  meldungNumberPlayers.appendChild(buttonTwoPlayers);
+  buttonTwoPlayers.addEventListener("click", (event) => {
+    numberHumanPlayers = 2;
+    outputStart.removeChild(meldungNumberPlayers);
+    startGame();
+  });
+};
+
+setNumberPlayers();
