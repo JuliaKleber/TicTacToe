@@ -40,8 +40,8 @@ The computer player has a basic AI to make moves.
 
 ## Screenshot
 
-https://github.com/GoldieCrystal/TicTacToe/assets/142741980/99e12bbd-6644-422a-885a-6bc38cf1afde
+![image](https://github.com/GoldieCrystal/TicTacToe/assets/142741980/99e12bbd-6644-422a-885a-6bc38cf1afde)
 
 ## Author
 
-Julia Kleber (https://github.com/GoldieCrystal)
+[Julia Kleber](https://github.com/GoldieCrystal)
