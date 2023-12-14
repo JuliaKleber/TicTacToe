@@ -7,7 +7,7 @@ This is a Tic Tac Toe game implemented in JavaScript. It supports both one playe
 * One player mode: Play against the computer and test your skills.
 * Two players mode: Challenge a friend and play on the same device.
 
-## Game Locic
+## Game Logic
 
 The game is a Tic Tac Toe implementation for one or two players.
 The game board is represented by a 3x3 grid.
