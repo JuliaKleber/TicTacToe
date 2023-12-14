@@ -23,12 +23,13 @@ The computer player has a basic AI to make moves.
    git clone https://github.com/GoldieCrystal/TicTacToe.git
 
 2. Navigate to the game directory:
-
+3. 
+   ```bash
    cd TicTacToe
 
-3. Open the index.html file in your preferred web browser.
+4. Open the index.html file in your preferred web browser.
 
-4. Choose the game mode (One Player or Two Players) and enjoy the game!
+5. Choose the game mode (One Player or Two Players) and enjoy the game!
 
 ## Built With
 
