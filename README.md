@@ -44,4 +44,4 @@ The computer player has a basic AI to make moves.
 
 ## Author
 
-[Julia Kleber](https://github.com/GoldieCrystal)
+[Julia Kleber](https://github.com/JuliaKleber)
