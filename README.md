@@ -38,6 +38,10 @@ The computer player has a basic AI to make moves.
 - Javascript
 - Canvas
 
+## Link
+
+https://juliakleber.github.io/TicTacToe/
+
 ## Screenshot
 
 ![image](https://github.com/GoldieCrystal/TicTacToe/assets/142741980/925d3a92-0268-41c1-ac29-efec7117bf03)
