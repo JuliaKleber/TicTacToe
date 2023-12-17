@@ -20,7 +20,7 @@ The computer player has a basic AI to make moves.
 1. Clone the repository to your local computer:
 
    ```bash
-   git clone https://github.com/GoldieCrystal/TicTacToe.git
+   git clone https://github.com/JuliaKleber/TicTacToe.git
 
 2. Navigate to the game directory:
    
