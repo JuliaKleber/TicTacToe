@@ -33,10 +33,10 @@ The computer player has a basic AI to make moves.
 
 ## Built With
 
-- HTML
-- CSS
 - Javascript
 - Canvas
+- HTML
+- CSS
 
 ## Link
 
