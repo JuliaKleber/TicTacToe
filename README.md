@@ -12,7 +12,7 @@ This is a Tic Tac Toe game implemented in JavaScript. It supports both one playe
 The game is a Tic Tac Toe implementation for one or two players.
 The game board is represented by a 3x3 grid.
 Players are represented by "cross" (player 1) and "circle" (player 2).
-The game alternates turns between human and computer players.
+The game alternates turns between human and computer players, respectively the two human players.
 The computer player has a basic AI to make moves.
 
 ## Installation and Usage
