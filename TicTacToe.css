@@ -78,6 +78,7 @@ footer {
   background-image: linear-gradient(to right, #b5d5d8, #fcb1f2, #ffff00);
   position: fixed;
   width: 100%;
+  height: 20px;
   bottom: 0px;
   padding: 5px;
   margin: 0px;
