@@ -1,6 +1,6 @@
 # TicTacToe
 
-This is a Tic Tac Toe game implemented in JavaScript. It supports both one player and two players modes.
+This is a Tic Tac Toe game implemented with JavaScript. It supports both one player and two players modes.
 
 ## Features
 
