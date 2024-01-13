@@ -1,6 +1,6 @@
 # TicTacToe
 
-This is a Tic Tac Toe game implemented in JavaScript. It supports both one player and two players modes.
+This is a Tic Tac Toe game implemented with JavaScript. It supports both one player and two players modes.
 
 ## Features
 
@@ -12,15 +12,26 @@ This is a Tic Tac Toe game implemented in JavaScript. It supports both one playe
 The game is a Tic Tac Toe implementation for one or two players.
 The game board is represented by a 3x3 grid.
 Players are represented by "cross" (player 1) and "circle" (player 2).
-The game alternates turns between human and computer players.
+The game alternates turns between human and computer players, respectively the two human players.
 The computer player has a basic AI to make moves.
+
+## Link
+
+https://juliakleber.github.io/TicTacToe/
+
+## Built With
+
+- JavaScript
+- Canvas
+- HTML
+- CSS
 
 ## Installation and Usage
 
 1. Clone the repository to your local computer:
 
    ```bash
-   git clone https://github.com/GoldieCrystal/TicTacToe.git
+   git clone https://github.com/JuliaKleber/TicTacToe.git
 
 2. Navigate to the game directory:
    
@@ -31,16 +42,9 @@ The computer player has a basic AI to make moves.
 
 4. Choose the game mode (One Player or Two Players) and enjoy the game!
 
-## Built With
-
-- HTML
-- CSS
-- Javascript
-- Canvas
-
 ## Screenshot
 
-![image](https://github.com/GoldieCrystal/TicTacToe/assets/142741980/925d3a92-0268-41c1-ac29-efec7117bf03)
+![image](https://github.com/JuliaKleber/TicTacToe/assets/142741980/47902df9-2d71-4219-931a-86282aacf526)
 
 ## Author
 
