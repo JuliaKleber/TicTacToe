@@ -21,7 +21,7 @@ https://juliakleber.github.io/TicTacToe/
 
 ## Built With
 
-- Javascript
+- JavaScript
 - Canvas
 - HTML
 - CSS
