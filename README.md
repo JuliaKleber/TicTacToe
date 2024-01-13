@@ -15,6 +15,17 @@ Players are represented by "cross" (player 1) and "circle" (player 2).
 The game alternates turns between human and computer players, respectively the two human players.
 The computer player has a basic AI to make moves.
 
+## Link
+
+https://juliakleber.github.io/TicTacToe/
+
+## Built With
+
+- Javascript
+- Canvas
+- HTML
+- CSS
+- 
 ## Installation and Usage
 
 1. Clone the repository to your local computer:
@@ -30,17 +41,6 @@ The computer player has a basic AI to make moves.
 3. Open the index.html file in your preferred web browser.
 
 4. Choose the game mode (One Player or Two Players) and enjoy the game!
-
-## Built With
-
-- Javascript
-- Canvas
-- HTML
-- CSS
-
-## Link
-
-https://juliakleber.github.io/TicTacToe/
 
 ## Screenshot
 
