@@ -44,7 +44,7 @@ https://juliakleber.github.io/TicTacToe/
 
 ## Screenshot
 
-![image](https://github.com/GoldieCrystal/TicTacToe/assets/142741980/925d3a92-0268-41c1-ac29-efec7117bf03)
+![image](https://github.com/JuliaKleber/TicTacToe/assets/142741980/5f9becef-3cfb-4370-9623-a8bbac525207)
 
 ## Author
 
