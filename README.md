@@ -25,7 +25,7 @@ https://juliakleber.github.io/TicTacToe/
 - Canvas
 - HTML
 - CSS
-- 
+
 ## Installation and Usage
 
 1. Clone the repository to your local computer:
