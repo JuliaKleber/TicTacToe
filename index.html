@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="a Tic Tac Toe game for one and for two players"
+    />
+    <link href="TicTacToe.css" rel="stylesheet" type="text/css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Tic Tac Toe</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="TicTacToe.css" rel="stylesheet" type="text/css">
-</head>
-
-<body>
-  <header>
-    Tic Tac Toe
-  </header>
-  <main>
-    <div class="margin hidden" id="boardContainer"></div>
-    <div class="margin">
-      <p id="output-end" class="hidden"></p>
-      <div id="output-start">
+  <body>
+    <header>Tic Tac Toe</header>
+    <main>
+      <div class="margin hidden" id="boardContainer"></div>
+      <div class="margin">
+        <p id="output-end" class="hidden"></p>
+        <div id="output-start"></div>
+        <p>
+          Spieler 1 setzt Kreuze und Spieler 2 setzt Kreise.<br /><br />
+          Wer als erstes drei Symbole in einer Reihe, Spalte oder Diagonale
+          platzieren kann, gewinnt.<br />
+        </p>
       </div>
-      <p>Spieler 1 setzt Kreuze und Spieler 2 setzt Kreise.<br><br>
-        Wer als erstes drei Symbole in einer Reihe,
-        Spalte oder Diagonale platzieren kann, gewinnt.<br>
-      </p>
-    </div>
-  </main>
-  <script src="TicTacToe.js"></script>
-  <footer>
-  </footer>
-</body>
-
+    </main>
+    <script src="TicTacToe.js"></script>
+    <footer></footer>
+  </body>
 </html>
